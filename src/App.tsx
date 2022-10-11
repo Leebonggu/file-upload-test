@@ -30,7 +30,6 @@ function App() {
       upload_at: new Date(),
       verified: false,
     };
-    console.log(e.dataTransfer.files);
     if (e.dataTransfer.files) {
       Array.from(e.dataTransfer.files).forEach((file) => {
         dispatch(uploadFile(file));
@@ -43,7 +42,6 @@ function App() {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(e.target.files);
   };
 
   const onDragOver = (e: DragEvent) => {
@@ -73,8 +71,6 @@ function App() {
     e.stopPropagation();
   };
 
-  console.log(files);
-
   return (
     <div className="p-20 bg-gray-100" onDragOver={protectedArea} onDrop={protectedArea}>
       <div>
@@ -87,7 +83,7 @@ function App() {
           onDragLeave={onDragLeave}
           onChange={onChange}
         />
-        <FileList files={fileList} fileDelete={handleDelete} />
+        <FileList files={files} fileDelete={handleDelete} />
         <Button disabled={!isValid}>다음으로</Button>
       </div>
     </div>

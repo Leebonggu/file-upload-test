@@ -36,6 +36,7 @@ const DropBox = forwardRef<HTMLInputElement, Props>(({ isOn, onDragOver, onDrop,
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
+        accept="image/*"
       />
     </div>
   );

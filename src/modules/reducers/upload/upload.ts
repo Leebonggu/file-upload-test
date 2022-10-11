@@ -28,7 +28,7 @@ const createUploadSlice = (initialState: UploadState) =>
 
 const uploadSlice = createUploadSlice(initialState);
 
-const uploadFile = createAction('@@UPLOAD/uploadFile', (file) => ({ payload: file }));
+const uploadFile = createAction('@@UPLOAD/uploadFile', (file) => ({ payload: { file } }));
 
 const { updateFile, removeFile } = uploadSlice.actions;
 

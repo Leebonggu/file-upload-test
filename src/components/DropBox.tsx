@@ -1,32 +1,44 @@
-import React, { DragEvent, MutableRefObject } from 'react'
+import { forwardRef } from 'react';
+import type { DragEvent, ChangeEvent } from 'react';
 
 interface Props {
   isOn: boolean;
-  ref?: MutableRefObject<HTMLDivElement | null>;
   onDragEnter: (e: DragEvent) => void;
   onDrop: (e: DragEvent) => void;
   onDragLeave: (e: DragEvent) => void;
   onDragOver: (e: DragEvent) => void;
-}
-function DropBox({
-  isOn,
-  ref,
-  onDragOver,
-  onDrop,
-  onDragLeave,
-}: Props
-) {
-  return (
-    <div
-      ref={ref}
-      className={`w-60 h-60 border-blue-400 border-2 rounded ${isOn ? 'bg-blue-200' : 'bg-white'} flex justify-center items-center`}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
-    >
-      DropBox
-    </div>
-  )
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default DropBox
+const DropBox = forwardRef<HTMLInputElement, Props>(({ isOn, onDragOver, onDrop, onDragLeave, onChange }: Props, ref) => {
+  return (
+    <div
+      style={{
+        position: 'relative',
+      }}
+      className={`w-60 h-60 border-blue-400 border-2 rounded ${isOn ? 'bg-blue-200' : 'bg-white'} flex justify-center items-center`}
+    >
+      <div>DND File</div>
+      <input
+        type="file"
+        style={{
+          cursor: 'pointer',
+          position: 'absolute',
+          opacity: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }}
+        multiple
+        ref={ref}
+        onChange={onChange}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      />
+    </div>
+  );
+});
+
+export default DropBox;

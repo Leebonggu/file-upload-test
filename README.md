@@ -15,3 +15,6 @@
 - https://stackoverflow.com/questions/40402744/redux-saga-axios-and-progress-event
 - https://stackoverflow.com/questions/40685288/redux-saga-upload-file-progress-event
 - https://github.com/el-davo/react-typescript-upload-saga
+
+### EventChannel
+- 이벤트 채널 은 외부 이벤트를 saga에 연결하거나 두 개의 개별 saga를 연결하는 데 도움이 되는 Redux-Saga의 기능입니다 

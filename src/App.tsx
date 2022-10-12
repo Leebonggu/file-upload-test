@@ -3,7 +3,7 @@ import FileList, { FileInfo } from './components/FileList';
 import DropBox from './components/DropBox';
 import Button from './components/Button';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { uploadFile } from './modules/reducers/upload/upload';
+import { uploadFile, removeFile } from './modules/reducers/upload/upload';
 
 function App() {
   const [isOn, setIsOn] = useState(false);
@@ -12,7 +12,7 @@ function App() {
   const dispatch = useAppDispatch();
   const { files } = useAppSelector((state) => state.upload.files);
 
-  const isValid = fileList.length > 0;
+  const isValid = files.length > 0;
 
   const onDragEnter = (e: DragEvent) => {
     e.preventDefault();
@@ -23,25 +23,22 @@ function App() {
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const newFile = {
-      id: fileList.length + 1,
-      name: `파일-${fileList.length + 1}`,
-      type: null,
-      upload_at: new Date(),
-      verified: false,
-    };
     if (e.dataTransfer.files) {
       Array.from(e.dataTransfer.files).forEach((file) => {
         dispatch(uploadFile(file));
       });
     }
-
-    setFileList([...fileList, newFile]);
     setIsOn(false);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    if (e.target.files) {
+      Array.from(e.target.files).forEach((file) => {
+        dispatch(uploadFile(file));
+      });
+    }
+    setIsOn(false);
   };
 
   const onDragOver = (e: DragEvent) => {
@@ -62,6 +59,7 @@ function App() {
   };
 
   const handleDelete = (id: string | number | null) => {
+    dispatch(removeFile({ id }));
     const newFileList = fileList.filter((file) => file.id !== id);
     setFileList(newFileList);
   };

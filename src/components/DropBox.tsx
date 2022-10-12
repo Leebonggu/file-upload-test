@@ -16,7 +16,7 @@ const DropBox = forwardRef<HTMLInputElement, Props>(({ isOn, onDragOver, onDrop,
       style={{
         position: 'relative',
       }}
-      className={`w-60 h-60 border-blue-400 border-2 rounded ${isOn ? 'bg-blue-200' : 'bg-white'} flex justify-center items-center`}
+      className={`w-full h-60 border-blue-400 border-2 rounded ${isOn ? 'bg-blue-200' : 'bg-white'} flex justify-center items-center`}
     >
       <div>DND File</div>
       <input

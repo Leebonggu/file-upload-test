@@ -14,7 +14,7 @@ function* uploadFileSaga(action: PayloadAction<{ file: File }>) {
   if (status < 300) {
     yield put(
       updateFile({
-        id: data.id,
+        id: `${data.id}-${Math.random()}`,
         name: data.title,
         type: 'test-image',
         upload_at: new Date().toISOString(),

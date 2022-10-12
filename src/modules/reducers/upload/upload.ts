@@ -1,10 +1,10 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FileInfo } from '../../../components/FileList';
 
+// type Upload = FileInfo & { progress: number };
 export interface UploadState {
   files: FileInfo[];
 }
-
 const initialState: UploadState = {
   files: [],
 };
@@ -17,7 +17,7 @@ const createUploadSlice = (initialState: UploadState) =>
       updateFile: (state, action: PayloadAction<FileInfo>) => {
         state.files.push(action.payload);
       },
-      removeFile: (state, action: PayloadAction<{ id: number }>) => {
+      removeFile: (state, action: PayloadAction<{ id: string | number | null }>) => {
         return {
           ...state,
           files: state.files.filter((file) => file.id !== action.payload.id),

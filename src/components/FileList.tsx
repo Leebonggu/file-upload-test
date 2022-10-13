@@ -1,5 +1,4 @@
-import ProgressBar from './ProgressBar';
-import styled from 'styled-components';
+import FileItem from './FileItem';
 
 export interface FileInfo {
   id: string | number | null;
@@ -9,38 +8,18 @@ export interface FileInfo {
   upload_at?: string | Date;
   verified?: boolean;
   progress?: number;
+  completed: boolean;
 }
 
 interface FileListProps {
-  files?: FileInfo[];
+  files: FileInfo[];
   fileDelete: (id: string | number | null) => void;
 }
 
-const Container = styled.div`
-  width: 100%;
-`;
-
-const TitleBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
 function FileList({ files, fileDelete }: FileListProps) {
-  console.log(files);
-  if (!files?.length) return <div>파일이 비어있습니다.</div>;
-
+  const hasFile = files.length > 0;
   return (
-    <>
-      {files?.map((file) => (
-        <Container key={file.id} onClick={() => fileDelete(file.id)}>
-          <TitleBox>
-            <span>{file.name}</span>
-            <span>삭제</span>
-          </TitleBox>
-          <ProgressBar />
-        </Container>
-      ))}
-    </>
+    <div className="w-full my-4">{hasFile ? files?.map((file) => <FileItem key={file.id} file={file} fileDelete={fileDelete} />) : ''}</div>
   );
 }
 

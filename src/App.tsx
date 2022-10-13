@@ -1,4 +1,4 @@
-import { useRef, useState, DragEvent, ChangeEvent } from 'react';
+import { useRef, useState, DragEvent, ChangeEvent, MouseEvent } from 'react';
 import FileList, { FileInfo } from './components/FileList';
 import DropBox from './components/DropBox';
 import Button from './components/Button';
@@ -36,9 +36,14 @@ function App() {
     if (e.target.files) {
       Array.from(e.target.files).forEach((file) => {
         dispatch(uploadFile(file));
+        e.target.value = '';
       });
     }
     setIsOn(false);
+  };
+
+  const onClick = (e: MouseEvent<HTMLInputElement>) => {
+    e.currentTarget.value = '';
   };
 
   const onDragOver = (e: DragEvent) => {
@@ -70,16 +75,19 @@ function App() {
   };
 
   return (
-    <div className="p-20 bg-gray-100" onDragOver={protectedArea} onDrop={protectedArea}>
-      <div>
+    <div className="p-20 bg-gray-100" style={{ minWidth: '960px', height: '100vh' }} onDragOver={protectedArea} onDrop={protectedArea}>
+      <div className="max-w-6xl mx-auto">
+        <div className="my-5 text-3xl font-bold">Hello Upload</div>
         <DropBox
           ref={inputRef}
           isOn={isOn}
+          uploadedFileCount={files.length}
           onDragEnter={onDragEnter}
           onDragOver={onDragOver}
           onDrop={onDrop}
           onDragLeave={onDragLeave}
           onChange={onChange}
+          onClick={onClick}
         />
         <FileList files={files} fileDelete={handleDelete} />
         <Button disabled={!isValid}>다음으로</Button>
